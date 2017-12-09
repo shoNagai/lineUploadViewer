@@ -1,4 +1,4 @@
-// zip -r LineBot.zip index.js node_modules
+// zip -r s3_uploader.zip index.js node_modules
 var https = require('https');
 var aws = require('aws-sdk');
 var config = require('./config');
@@ -73,6 +73,19 @@ exports.handler = function(event, context, callback) {
         }).on('end', function(){
 
             //取得した画像をS３へ保存
+            var s3 = new aws.S3();
+            
+            //ファイル名用に現在時刻を取得
+            var nowTime = new Date().getTime();
+
+            var params = {
+                Bucket: process.env.S3_BUCKET_NAME, 
+                Key:  nowTime + '.jpg', 
+                Body: Buffer.concat(data)
+            };
+            s3.putObject(params, function(err, data) {
+                context.done();
+            });
 
         });
     });
