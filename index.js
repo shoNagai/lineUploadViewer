@@ -22,7 +22,7 @@ exports.handler = (event, context, callback) => {
     //会話の場合はcontextとmodeを引き継ぐ
     if (message.type == 'text') {
 
-        post_text_message_line(replyToken, message.text);
+        // ost_text_message_line(replyToken, message.text);
 
     } else if (message.type == 'image') {
 
